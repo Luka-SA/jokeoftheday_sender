@@ -8,12 +8,8 @@ __updated__ = "2022-05-22"
 -------------------------------------------------------
 """
 # Imports
-"""
-from selenium import webdriver
-from bs4 import BeautifulSoup
-import pandas as pd
-"""
-jokes = open("jokes.txt", "r", encoding="utf-8")
+
+jokes = open("jokes.dat", "r", encoding="utf-8")
 
 
 def sendmessage(number, account_sid, auth_token, message):
@@ -25,7 +21,7 @@ def sendmessage(number, account_sid, auth_token, message):
         body=message,
         to=number)
 
-    print(message.sid)
+    print(message.sid + " - Message sent!")
     return
 
 

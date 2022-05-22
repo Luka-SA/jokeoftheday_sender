@@ -10,11 +10,12 @@ __updated__ = "2022-05-22"
 # Imports
 from functions import *
 import schedule
-import time
+from time import sleep
 
 
 def check_account():
-    """ check if you have already entered information
+    """
+    check if you have already entered information
     or if you need to...
     """
     file = open("info.joke", "r+")
@@ -56,11 +57,14 @@ def send_joke(phone_number, account_SID, auth_token):
 
 
 def job(phone, auth, SID):
-    schedule.every(1).seconds.do(send_joke, phone, SID, auth)
+    # swap below code to test usage
+    schedule.every(5).seconds.do(send_joke, phone, SID, auth)
+    #schedule.every().day.do(send_joke, phone, SID, auth)
 
     while True:
         schedule.run_pending()
-        time.sleep(1)
+        # time.sleep(1)
+        sleep(1)
 
 
 check_account()
