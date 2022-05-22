@@ -4,7 +4,7 @@
 -------------------------------------------------------
 Author:  Luka Senfner
 Email:   senfl5620@gmail.com
-__updated__ = "2022-05-21"
+__updated__ = "2022-05-22"
 -------------------------------------------------------
 """
 # Imports
@@ -13,15 +13,11 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 import pandas as pd
 """
-# Constants
-jokes = open("jokes.txt", "r")
+jokes = open("jokes.txt", "r", encoding="utf-8")
 
 
 def sendmessage(number, account_sid, auth_token, message):
     from twilio.rest import Client
-
-    #account_sid = ''
-    #auth_token = ''
     client = Client(account_sid, auth_token)
 
     message = client.messages.create(
@@ -35,11 +31,11 @@ def sendmessage(number, account_sid, auth_token, message):
 
 def getjokes_file():
     joke = jokes.readline()
-    # no strip?
     if joke != "":
         return joke
     else:
-        joke = "No more jokes"
+        joke = "No more jokes!"
+        jokes.close()
         return joke
 
 

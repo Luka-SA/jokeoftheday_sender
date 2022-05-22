@@ -4,7 +4,7 @@
 -------------------------------------------------------
 Author:  Luka Senfner
 Email:   senfl5620@gmail.com
-__updated__ = "2022-05-21"
+__updated__ = "2022-05-22"
 -------------------------------------------------------
 """
 # Imports
@@ -13,7 +13,10 @@ import schedule
 import time
 
 
-def func():
+def check_account():
+    """ check if you have already entered information
+    or if you need to...
+    """
     file = open("info.joke", "r+")
     line = file.readline().rstrip()
     """
@@ -40,16 +43,24 @@ def func():
         file.write(auth_token + "\n")
         file.write(account_SID + "\n")
     file.close()
+    job(phone_number, auth_token, account_SID)
+
+
+def send_joke(phone_number, account_SID, auth_token):
     message = getjokes_file()
-    sendmessage(phone_number, account_SID, auth_token, message)
+    if message == "No more jokes":
+        sendmessage(phone_number, account_SID, auth_token, message)
+        exit()
+    else:
+        sendmessage(phone_number, account_SID, auth_token, message)
 
 
-def job():
-    schedule.every(3).seconds.do(func)
+def job(phone, auth, SID):
+    schedule.every(1).seconds.do(send_joke, phone, SID, auth)
 
     while True:
         schedule.run_pending()
         time.sleep(1)
 
 
-job()
+check_account()
