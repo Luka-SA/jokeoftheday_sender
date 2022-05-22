@@ -8,16 +8,17 @@ __updated__ = "2022-05-21"
 -------------------------------------------------------
 """
 # Imports
-
-# Constants
+from functions import *
+import schedule
+import time
 
 
 def func():
     file = open("info.joke", "r+")
     line = file.readline().rstrip()
     """
-    order of file
-    phone number [includes area code]
+    **order of file:**
+    phone number [includes country code]
     auth token
     account SID
     """
@@ -39,6 +40,16 @@ def func():
         file.write(auth_token + "\n")
         file.write(account_SID + "\n")
     file.close()
+    message = getjokes_file()
+    sendmessage(phone_number, account_SID, auth_token, message)
 
 
-func()
+def job():
+    schedule.every(3).seconds.do(func)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+
+job()
