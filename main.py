@@ -32,6 +32,7 @@ def check_account():
         phone_number = line
         auth_token = file.readline().rstrip()
         account_SID = file.readline().rstrip()
+        print("A joke a day at 09:00!")
     else:
         country_code = input("Input your country code: ")
         number = input("Input your phone number: ")
@@ -49,7 +50,7 @@ def check_account():
 
 def send_joke(phone_number, account_SID, auth_token):
     message = getjokes_file()
-    if message == "No more jokes":
+    if message == "No more jokes!":
         sendmessage(phone_number, account_SID, auth_token, message)
         exit()
     else:
@@ -57,9 +58,9 @@ def send_joke(phone_number, account_SID, auth_token):
 
 
 def job(phone, auth, SID):
-    # swap below code to test usage
-    schedule.every(5).seconds.do(send_joke, phone, SID, auth)
-    #schedule.every().day.do(send_joke, phone, SID, auth)
+    # swap code to test usage
+    #schedule.every(3).seconds.do(send_joke, phone, SID, auth)
+    schedule.every().day.at("09:00").do(send_joke, phone, SID, auth)
 
     while True:
         schedule.run_pending()
