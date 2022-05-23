@@ -18,22 +18,24 @@ def check_account():
     check if you have already entered information
     or if you need to...
     """
-    file = open("info.joke", "r+")
-    line = file.readline().rstrip()
-    """
-    **order of file:**
-    phone number [includes country code]
-    auth token
-    account SID
-    """
-    # i am going to assume you have not screwed the file up
-    # do not screw around with it
-    if line.isnumeric():
+    try:
+        file = open("info.joke", "r")
+        line = file.readline().rstrip()
+        """
+        **order of file:**
+        phone number [includes country code]
+        auth token
+        account SID
+        """
+        # i am going to assume you have not screwed the file up
+        # do not screw around with it
         phone_number = line
         auth_token = file.readline().rstrip()
         account_SID = file.readline().rstrip()
         print("A joke a day at 09:00!")
-    else:
+
+    except:
+        file = open("info.joke", "w")
         country_code = input("Input your country code: ")
         number = input("Input your phone number: ")
         phone_number = country_code + number
@@ -44,6 +46,7 @@ def check_account():
         file.write(phone_number + "\n")
         file.write(auth_token + "\n")
         file.write(account_SID + "\n")
+        print("A joke a day at 09:00!  Have fun!!!")
     file.close()
     job(phone_number, auth_token, account_SID)
 
